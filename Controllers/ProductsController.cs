@@ -42,7 +42,7 @@ namespace MvcNorthwindJatko.Controllers
 
             if (!String.IsNullOrEmpty(searchString1))
             {
-                tuotteet = tuotteet.Where(p => p.ProductName.Contains(searchString1));
+                tuotteet = tuotteet.Where(p => p.ProductName.Contains(searchString1) || p.Suppliers.CompanyName.Contains(searchString1));
             }
 
             if (!String.IsNullOrEmpty(ProductCategory) && (ProductCategory != "0"))
@@ -74,7 +74,7 @@ namespace MvcNorthwindJatko.Controllers
                         break;
                 }
 
-                int para = int.Parse(ProductCategory);
+                //int para = int.Parse(ProductCategory);
 
             }
             else if (!String.IsNullOrEmpty(ProductCategory) && (ProductCategory != "0")) //Jos käytössä on tuoteryhmärajaus, niin käytetään sitä ja sen lisäksi lajitellaan tulokset 
