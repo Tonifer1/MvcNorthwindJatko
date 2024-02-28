@@ -1,0 +1,31 @@
+﻿<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+    <div class="container">
+        @*@Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        <a class="navbar-brand" href="#">(@ViewBag.LoggedStatus)</a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>*@
+        <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li><a href="#" class="nav-link">@Session["Username"]</a></li>
+                <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                @*<li>@Html.ActionLink("Ordersummary", "Ordersummary", "Orders", new { area = "" }, new { @class = "nav-link" })</li>*@
+
+                @*<li>@Html.ActionLink("Products", "Index", "Products", new { area = "" }, new { @class = "nav-link" })</li>*@
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Login</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/Home/Login">Login</a>
+                        <a class="dropdown-item" href="/Home/Logout">Logout</a>
+                        @*controlleri/Views, ilman cshtml päätettä*@
+                        <a class="dropdown-item" href="/Orders/OrderSummary">Ordersummary</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+

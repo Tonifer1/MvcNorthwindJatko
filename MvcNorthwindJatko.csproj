@@ -2324,6 +2324,9 @@
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\Orders\Ordersummary.cshtml" />
+    <Content Include="Views\Shared\_NavBarLoggedin.cshtml" />
+    <Content Include="Views\Shared\_NavBarLoggedout.cshtml" />
+    <Content Include="Views\Orders\TilausOtsikot.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

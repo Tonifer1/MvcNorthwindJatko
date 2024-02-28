@@ -185,6 +185,11 @@ namespace MvcNorthwindJatko.Controllers
                                ViewBag.TotalOrders = orderSummary.Count();
                                     return View(orderSummary);
         }
+        public ActionResult TilausOtsikot()
+        {
+            var orders = db.Orders.Include(o => o.Customers).Include(o => o.Employees).Include(o => o.Shippers);
+            return View(orders.ToList());
+        }
 
     }//public class
 }//namespace
