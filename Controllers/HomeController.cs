@@ -13,7 +13,13 @@ namespace MvcNorthwindJatko.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            if (Session["Username"] == null)
+            {
+                ViewBag.LoggedStatus = "Out";
+            }
+            else ViewBag.LoggedStatus = "In";
+                ViewBag.LoginError = 0;
+                return View();
         }
 
         public ActionResult About()
@@ -43,7 +49,7 @@ namespace MvcNorthwindJatko.Controllers
         //}
 
 
-        
+
 
         public ActionResult Login()//Controllerin Metodi.Palauttaa Metodin nimisen näkymän oletuksena.
         {
@@ -61,17 +67,19 @@ namespace MvcNorthwindJatko.Controllers
             {
                 ViewBag.LoginMessage = "Successfull login";
                 ViewBag.LoggedStatus = "In";
-                ViewBag.LoginError = 0;
+                ViewBag.LoginError = 0;//Ei virhettä
                 Session["UserName"] = LoggedUser.UserName;
+                Session["LoginID"] = LoggedUser.LoginId;
                 return RedirectToAction("Index", "Home"); //Tässä määritellään mihin onnistunut kirjautuminen johtaa --> Home/Index
             }
             else
             {
                 ViewBag.LoginMessage = "Login unsuccessfull";
                 ViewBag.LoggedStatus = "Out";
-                ViewBag.LoginError = 1;
+                ViewBag.LoginError = 1;//Pakotetaan modaali login-ruutu uudelleen, koska kirjautumisyritys epäonnistui
                 LoginModel.LoginErrorMessage = "Tuntematon käyttäjätunnus tai salasana.";
-                return View("Login", LoginModel);
+                return View("Index", LoginModel);
+                //return View("Login", LoginModel);
             }
         }
         public ActionResult LogOut()
