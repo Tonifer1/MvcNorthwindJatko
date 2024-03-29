@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="NorthwindOriginalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="NorthwindOriginalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="CategoryID" />
@@ -171,6 +171,40 @@
           <Property Name="TerritoryID" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="TerritoryDescription" Type="nchar" MaxLength="50" Nullable="false" />
           <Property Name="RegionID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NorthwindOriginal.dbo.Category Sales for 1997' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Category Sales for 1997">
+          <Key>
+            <PropertyRef Name="rowid" />
+            <PropertyRef Name="CategoryName" />
+          </Key>
+          <Property Name="rowid" Type="bigint" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="CategorySales" Type="money" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NorthwindOriginal.dbo.Product Sales for 1997' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Product Sales for 1997">
+          <Key>
+            <PropertyRef Name="CategoryName" />
+            <PropertyRef Name="ProductName" />
+          </Key>
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="ProductSales" Type="money" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NorthwindOriginal.dbo.ProductsDailySales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ProductsDailySales">
+          <Key>
+            <PropertyRef Name="rowid" />
+            <PropertyRef Name="ProductName" />
+          </Key>
+          <Property Name="rowid" Type="bigint" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="DailySales" Type="float" />
         </EntityType>
         <Association Name="FK_CustomerCustomerDemo">
           <End Role="CustomerDemographics" Type="Self.CustomerDemographics" Multiplicity="1" />
@@ -355,6 +389,28 @@
           <EntitySet Name="Shippers" EntityType="Self.Shippers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Territories" EntityType="Self.Territories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category Sales for 1997" EntityType="Self.Category Sales for 1997" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Category Sales for 1997].[rowid] AS [rowid], 
+    [Category Sales for 1997].[CategoryName] AS [CategoryName], 
+    [Category Sales for 1997].[CategorySales] AS [CategorySales]
+    FROM [dbo].[Category Sales for 1997] AS [Category Sales for 1997]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Product Sales for 1997" EntityType="Self.Product Sales for 1997" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Product Sales for 1997].[CategoryName] AS [CategoryName], 
+    [Product Sales for 1997].[ProductName] AS [ProductName], 
+    [Product Sales for 1997].[ProductSales] AS [ProductSales]
+    FROM [dbo].[Product Sales for 1997] AS [Product Sales for 1997]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ProductsDailySales" EntityType="Self.ProductsDailySales" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ProductsDailySales].[rowid] AS [rowid], 
+    [ProductsDailySales].[OrderDate] AS [OrderDate], 
+    [ProductsDailySales].[ProductName] AS [ProductName], 
+    [ProductsDailySales].[DailySales] AS [DailySales]
+    FROM [dbo].[ProductsDailySales] AS [ProductsDailySales]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_CustomerCustomerDemo" Association="Self.FK_CustomerCustomerDemo">
             <End Role="CustomerDemographics" EntitySet="CustomerDemographics" />
             <End Role="CustomerCustomerDemo" EntitySet="CustomerCustomerDemo" />
@@ -412,8 +468,7 @@
             <End Role="Territories" EntitySet="Territories" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NorthwindOriginalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -781,7 +836,38 @@
             <End Role="Employees" EntitySet="Employees" />
             <End Role="Territories" EntitySet="Territories" />
           </AssociationSet>
+          <EntitySet Name="Category_Sales_for_1997" EntityType="NorthwindOriginalModel.Category_Sales_for_1997" />
+          <EntitySet Name="Product_Sales_for_1997" EntityType="NorthwindOriginalModel.Product_Sales_for_1997" />
+          <EntitySet Name="ProductsDailySales" EntityType="NorthwindOriginalModel.ProductsDailySales" />
         </EntityContainer>
+        <EntityType Name="Category_Sales_for_1997">
+          <Key>
+            <PropertyRef Name="rowid" />
+            <PropertyRef Name="CategoryName" />
+          </Key>
+          <Property Name="rowid" Type="Int64" Nullable="false" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="CategorySales" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="Product_Sales_for_1997">
+          <Key>
+            <PropertyRef Name="CategoryName" />
+            <PropertyRef Name="ProductName" />
+          </Key>
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="ProductSales" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="ProductsDailySales">
+          <Key>
+            <PropertyRef Name="rowid" />
+            <PropertyRef Name="ProductName" />
+          </Key>
+          <Property Name="rowid" Type="Int64" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="DailySales" Type="Double" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -966,6 +1052,34 @@
               <ScalarProperty Name="TerritoryID" ColumnName="TerritoryID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Category_Sales_for_1997">
+            <EntityTypeMapping TypeName="NorthwindOriginalModel.Category_Sales_for_1997">
+              <MappingFragment StoreEntitySet="Category Sales for 1997">
+                <ScalarProperty Name="CategorySales" ColumnName="CategorySales" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="rowid" ColumnName="rowid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_Sales_for_1997">
+            <EntityTypeMapping TypeName="NorthwindOriginalModel.Product_Sales_for_1997">
+              <MappingFragment StoreEntitySet="Product Sales for 1997">
+                <ScalarProperty Name="ProductSales" ColumnName="ProductSales" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductsDailySales">
+            <EntityTypeMapping TypeName="NorthwindOriginalModel.ProductsDailySales">
+              <MappingFragment StoreEntitySet="ProductsDailySales">
+                <ScalarProperty Name="DailySales" ColumnName="DailySales" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="rowid" ColumnName="rowid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -29,6 +29,9 @@
         <AssociationConnector Association="NorthwindOriginalModel.FK_Territories_Region" ManuallyRouted="false" />
         <AssociationConnector Association="NorthwindOriginalModel.CustomerCustomerDemo" ManuallyRouted="false" />
         <AssociationConnector Association="NorthwindOriginalModel.EmployeeTerritories" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="NorthwindOriginalModel.Category_Sales_for_1997" Width="1.5" PointX="3.375" PointY="7.75" />
+        <EntityTypeShape EntityType="NorthwindOriginalModel.Product_Sales_for_1997" Width="1.5" PointX="5.375" PointY="7.75" />
+        <EntityTypeShape EntityType="NorthwindOriginalModel.ProductsDailySales" Width="1.5" PointX="7.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

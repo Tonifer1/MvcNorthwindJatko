@@ -18,20 +18,49 @@
 
         });
     </script>
-}
-@*<script type="text/javascript">
-        $(window).on('load', function () {
-            if (@ViewBag.LoginError == 1)
-            {
-                $('#LoginRuutu').modal('show');
+
+
+    @*Kokeilu 1*@
+    <div class= "container-fluid">
+        <div class=" row">
+          </div class="col-lg-4">
+            <canvas id="myChart"></canvas>        
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
         });
-    </script>*@
+    </script>
+
+}
 
 
-@*<script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>*@
+
+
 
 <a class="fas fa-cloud" title="Tuotteet" href="~/Products/index"></a>
+<a class="btn btn-primary fas fa-cloud" href="~/Products/index">Tuotteet</a>
+<a class="fa-brands fa-product-hunt" href="~/Products/index"></a>
 
 <main>
     @if (Session["UserName"] == null)
@@ -70,9 +99,9 @@
 
 @*Modal- tyyppisen ikkunan avauspainike*@
 @*@if (Session["UserName"] != null) { }*@
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#LoginRuutu">Avaa Modal-ikkuna</button>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#LoginRuutu">Avaa Modal-ikkuna</button>
 
-    @*Modal -tyyppisen ikkunan koodiesimerkki*@
+@*Modal -tyyppisen ikkunan koodiesimerkki*@
 <div class="modal" id="LoginRuutu">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -111,7 +140,7 @@
             </div>
             <div class="modal-footer">
                 @*Formin lähettävä button, joka ei kuitenkaan ole formin sisällä, vaan viitta formin ID:hen*@
-                <button type="button" class="btn btn-secondary" form="loginForm">Kirjaudu</button>
+                <button type="submit" class="btn btn-secondary" form="loginForm"><i class="fa-solid fa-right-to-bracket"></i>Kirjaudu</button>
 
                 @*Kontrollerin kutsu UrlAction - komennolla, jotta peruuttaminen johtaa alkutilanteeseen*@
                 <a href="@Url.Action("Index", "Home") " class="btn btn-secondary" data-bs-dismiss="modal">Peruuta</a>

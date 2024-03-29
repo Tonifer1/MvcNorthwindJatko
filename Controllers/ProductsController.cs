@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.SqlServer;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Security.Policy;
 using System.Web;
 using System.Web.Mvc;
 using MvcNorthwindJatko.Models;
+using MvcNorthwindJatko.ViewModels;
 using PagedList;
 
 namespace MvcNorthwindJatko.Controllers
@@ -21,7 +23,7 @@ namespace MvcNorthwindJatko.Controllers
         // GET: Products
         public ActionResult Index(string sortOrder,string currentFilter1,string searchString1,string ProductCategory,int? page, int?  pagesize)
         {
-            ViewBag.CurrentSort = sortOrder;
+            ViewBag.CurrentSort = sortOrder;    /*if sortOrderia ei ole annettu,siirtyy productname _desc jos taas oli valittu, vaihtaa tyhjäksi""*/
             ViewBag.ProductNameSortParm = String.IsNullOrEmpty(sortOrder) ? "productname_desc" : "";
             ViewBag.UnitPriceSortParm = sortOrder == "UnitPrice" ? "UnitPrice_desc" : "UnitPrice";
             
@@ -125,7 +127,7 @@ namespace MvcNorthwindJatko.Controllers
             Categories tyhjaCategory = new Categories();
             tyhjaCategory.CategoryID = 0;
             tyhjaCategory.CategoryName = "";
-            tyhjaCategory.CategoryIDCategoryName = "";
+            tyhjaCategory.CategoryIDCategoryName = " ";
             lstCategories.Add(tyhjaCategory);
             foreach (Categories category in categoryList)
             {
@@ -263,6 +265,44 @@ namespace MvcNorthwindJatko.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult _ProductSalesPerDate(string productName)
+
+        {
+
+            //if (String.IsNullOrEmpty(productName)) productName = "Lakkalikööri";  //debuggausta varten
+
+
+
+                List<DailyProductSales> dailyproductsalesList = new List<DailyProductSales>();
+
+
+
+            var orderSummary = from pds in db.ProductsDailySales
+
+                               where pds.ProductName == productName
+
+                               orderby pds.OrderDate
+
+
+
+                               select new DailyProductSales
+
+                               {
+
+                                   OrderDate = SqlFunctions.DateName("year", pds.OrderDate) + "." + SqlFunctions.DateName("MM", pds.OrderDate) + "." + SqlFunctions.DateName("day", pds.OrderDate),
+
+
+
+                                   DailySales = (float)pds.DailySales,
+
+                                   ProductName = pds.ProductName
+
+                               };
+
+            return Json(orderSummary, JsonRequestBehavior.AllowGet);
+
         }
     }//Public class
 

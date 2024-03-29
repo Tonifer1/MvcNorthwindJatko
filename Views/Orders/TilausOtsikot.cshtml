@@ -4,6 +4,29 @@
     ViewBag.Title = "TilausOtsikot";
 }
 
+@section scripts {
+    <script type="text/javascript">
+ $(function () {
+ $(".showOrderClass").click(function () {
+ let orderId = $(this).data("orderid");
+ //alert("Klikkasit tilausnumeroa: " + orderId);
+ //document.getElementById("OrderID").value = orderId;
+ //PartialView:
+ var url = "/Orders/_TilausRivit/?OrderID=" + orderId;
+ $("#orderDetails_" + orderId).append(" <b>Loading order " + orderId +
+" rows...</b>");
+ var $detailDiv = $("#orderDetails_" + orderId);
+ console.log(url);
+ console.log($detailDiv);
+ $.get(url, function (data) {
+ $detailDiv.replaceWith(data);
+ });
+ });
+ });
+    </script>
+}
+
+
 <h2>Tilausotsikot</h2>
 <!--//koko selaimen alue käyttöön-->
 <div class="container-fluid">
@@ -26,12 +49,12 @@
         </a>
     </div>
     <div id="accordion">
-        
-        Master-Detail-näkymät
+        
+        @*Master-Detail-näkymät*@
         @foreach (var item in Model)
         {
             <div class="card">
-                Tilausotsikot–sivun koodiesimerkki kopioitavaksi
+                @*Tilausotsikot–sivun koodiesimerkki kopioitavaksi*@
                 <div class="card-header">
                     <!--BS5-->
                     <a class="card-link showOrderClass" data-orderid="@item.OrderID" data-bs-toggle="collapse" href="#collapse_@item.OrderID">

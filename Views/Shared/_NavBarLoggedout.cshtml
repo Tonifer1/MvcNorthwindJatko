@@ -12,16 +12,18 @@
                 <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                 <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                @*<li>@Html.ActionLink("Ordersummary", "Ordersummary", "Orders", new { area = "" }, new { @class = "nav-link" })</li>*@
+                <li>@Html.ActionLink("Products", "Index", "Products", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Tilausotsikot", "TilausOtsikot", "Orders", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Tilausrivit", "_TilausRivit", "Orders", new { area = "" }, new { @class = "nav-link" })</li>
 
-                @*<li>@Html.ActionLink("Products", "Index", "Products", new { area = "" }, new { @class = "nav-link" })</li>*@
+                <li>@Html.ActionLink("ProductsSalesPerDate", "_ProductSalesPerDate", "Products", new { area = "" }, new { @class = "nav-link" })</li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Login</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="/Home/Login">Login</a>
-                        <a class="dropdown-item" href="/Home/Logout">Logout</a>
+                        @*<a class="dropdown-item" href="/Home/Logout">Logout</a>*@
                         @*controlleri/Views, ilman cshtml päätettä*@
-                        <a class="dropdown-item" href="/Orders/OrderSummary">Ordersummary</a>
+                        @*<a class="dropdown-item" href="/Orders/OrderSummary">Ordersummary</a>*@
                     </div>
                 </li>
             </ul>

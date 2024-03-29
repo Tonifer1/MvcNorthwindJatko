@@ -37,5 +37,8 @@ namespace MvcNorthwindJatko.Models
         public virtual DbSet<Shippers> Shippers { get; set; }
         public virtual DbSet<Suppliers> Suppliers { get; set; }
         public virtual DbSet<Territories> Territories { get; set; }
+        public virtual DbSet<Category_Sales_for_1997> Category_Sales_for_1997 { get; set; }
+        public virtual DbSet<Product_Sales_for_1997> Product_Sales_for_1997 { get; set; }
+        public virtual DbSet<ProductsDailySales> ProductsDailySales { get; set; }
     }
 }
